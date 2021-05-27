@@ -20,4 +20,13 @@ class FunctionalCalcTest(unittest.TestCase):
     def test_divide(self):
         self.assertEqual(self.calc.divide(2, 4), 0.5)
 
-    def test_
+    def test_inch_to_cm(self):
+        self.assertEqual(self.calc.inch_to_cm(2), 5.08)
+
+    def test_triangle_area(self):
+        self.assertEqual(self.calc.triangle_area(2,2),2.0)
+
+    def test_divisible(self):
+        self.assertEqual(self.calc.divisible(2,0), False)
+        self.assertEqual(self.calc.divisible(2,3), False)
+        self.assertEqual(self.calc.divisible(2,2), True)
