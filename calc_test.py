@@ -2,11 +2,11 @@
 import pytest
 import unittest
 
-from FunctionalCalc import FunctionalCalc
+from functional_calc import FunctionalCalculator
 
 class FunctionalCalcTest(unittest.TestCase):
 
-    calc = FunctionalCalc()
+    calc = FunctionalCalculator()
 
     def test_add(self): # naming convention is essential as 'test' is the word that we need to use when naming tests so python interpreter recognises it as a testcase.
         self.assertEqual(self.calc.add(2, 4), 6)
@@ -30,3 +30,9 @@ class FunctionalCalcTest(unittest.TestCase):
         self.assertEqual(self.calc.divisible(2,0), False)
         self.assertEqual(self.calc.divisible(2,3), False)
         self.assertEqual(self.calc.divisible(2,2), True)
+
+    def test_percentage(self):
+        self.assertEqual(self.calc.percentage(1,2), 50.0)
+
+    def test_modulus(self):
+        self.assertEqual(self.calc.modulus(1,2), 1)

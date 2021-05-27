@@ -15,11 +15,13 @@ After that we simply define what we require the test case to return when we run 
 import pytest
 import unittest
 
-from FunctionalCalc import FunctionalCalc
+from functional_calc import FunctionalCalculator
 
 class FunctionalCalcTest(unittest.TestCase):
 
-    calc = FunctionalCalc()
+class FunctionalCalcTest(unittest.TestCase):
+
+    calc = FunctionalCalculator()
 
     def test_add(self): # naming convention is essential as 'test' is the word that we need to use when naming tests so python interpreter recognises it as a testcase.
         self.assertEqual(self.calc.add(2, 4), 6)
@@ -43,9 +45,71 @@ class FunctionalCalcTest(unittest.TestCase):
         self.assertEqual(self.calc.divisible(2,0), False)
         self.assertEqual(self.calc.divisible(2,3), False)
         self.assertEqual(self.calc.divisible(2,2), True)
+        
+    
+    def test_percentage(self):
+        self.assertEqual(self.calc.percentage(1,2), 50.0)
+
+    def test_modulus(self):
+        self.assertEqual(self.calc.modulus(self,1,2), 1)
+
 
 ```
 
 Notice that all testing functions start with `test`, which is important as it is needed for the interpreter to recognise them as tests. Also notice that the test of divisible has three test cases, one for each branch of the intended control flow.
 
-Now that we have defined what tests we want our code to pass, we write code to pass these tests. As this exercise is about the TDD approach, I took my calculator code from a previous iteration.
+Now that we have defined what tests we want our code to pass, we write code to pass these tests. As this exercise is about the TDD approach, I took my calculator code from a previous iteration. I did this through two classes:
+
+```python
+#file named oop_calculator
+class SimpleCalculator:
+
+    def add(self, value1, value2):
+        return value1 + value2
+
+    def subtract(self, value1, value2):
+        return value1 - value2
+
+    def multiply(self, value1, value2):
+        return value1 * value2
+
+    def divide(self, value1, value2):
+        return value1 / value2
+
+```
+We also have to ahve the parent class, SimpleeCalculator available.
+
+```python
+from oop_calculator import SimpleCalculator
+
+class FunctionalCalculator(SimpleCalculator):
+    #add mroe functionality compared to the simple calculator
+    def __init__(self):
+        super().__init__()
+
+
+    def inch_to_cm(self, value1):
+        return value1 * 2.54
+
+    def triangle_area(self, height, width):
+        return height*width/2
+
+    def divisible(self, value1, value2):
+        if value2 == 0:
+            return False
+        elif value1 % value2 == 0:
+            return True
+        else:
+            return False
+```
+This code fails two of the tests, as the functions modulus and percentage are not yet available. Therefore, we have to write code to pass our tests, meaning we need to add the below to `FunctionalCalculator`:
+```python
+
+    def percentage(self, value1, value2):
+        if value1 >= 0:
+            return value1*100/value2
+
+    def modulus(self, value1, value2):
+        return value1 % value2
+
+```
